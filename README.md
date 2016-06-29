@@ -8,6 +8,10 @@ This role has been specifically developed to be used for the deployment of the *
 Role Variables
 --------------
 
+- `cdmi_version`: (default 1.0) The version of CDMI to install.
+  There need to be appropriatly named `.rpm` and `.deb` files in the main
+  [git repository](https://github.com/indigo-dc/CDMI).
+
 Requirements
 ------------
 - Only *CentOS 7* or *Ubuntu 14.04 LTS* on the nodes are explicily supported

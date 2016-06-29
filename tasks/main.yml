@@ -1,0 +1,50 @@
+---
+- name: Install git
+  package: name=git state=present
+
+- name: Create tmp dir
+  file: path={{ tmp_dir }} state=directory
+  # If the tmp dir existed before, we won't delete it in the end
+  notify:
+    - remove tmp dir
+
+
+# As Ubuntu 14.04 LTS has no Java 8, we need these 3 tasks
+# This should be in a seperate role (and repo), since it is needed
+# in other roles, too (e.g. IDH)
+- name: Add Java 8 Repository
+  apt_repository:
+    repo: ppa:webupd8team/java
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Configure Java 8 Debian package
+  debconf:
+    name: oracle-java8-installer
+    question: shared/accepted-oracle-license-v1-1
+    vtype: select
+    value: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install Java 8
+  apt:
+    name: oracle-java8-installer
+    state: present
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: Clone CDMI repo
+  git:
+    repo: "https://github.com/indigo-dc/CDMI.git"
+    dest: "{{ tmp_dir }}/git-repo"
+
+- name: Install rpm package
+  yum:
+    name: "{{ tmp_dir }}/git-repo/cdmi-server-{{ cdmi_version }}-1.el7.centos.x86_64.rpm"
+  when: ansible_pkg_mgr == "yum"
+
+- name: Install deb package
+  apt:
+    deb: "{{ tmp_dir }}/git-repo/cdmi-server-{{ cdmi_version }}.deb"
+  when: ansible_pkg_mgr == "apt"
