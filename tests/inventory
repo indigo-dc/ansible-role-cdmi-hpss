@@ -1,0 +1,10 @@
+# Each host needs to have sshd running, and the user 'ansible' needs to be able
+# to login without password, i.e. a keyfile must be available (either via
+# ssh-agent or an entry in ~/.ssh/config). The user 'ansible' has to be able to
+# 'su root' without a password or with the password 'foo'.
+
+[centos]
+cdmi[0:3].local.scc.kit.edu ansible_become_pass=foo
+
+[ubuntu]
+cdmi[10:13].local.scc.kit.edu ansible_become_pass=foo
