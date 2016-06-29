@@ -20,24 +20,29 @@ Example Playbook
 ----------------
 
 - From ansible galaxy:
+
   ```sh
    $ ansible-galaxy install indigo-dc.cdmi
   ```
   Create a playbook like this:
+
   ```yaml
   - hosts: cdmi-servers
     roles:
     - indigo-dc.cdmi
   ```
+
   ```sh
    $ ansible-playbook -i tests/inventory <path-to-playbook>
   ```
 - From git:
+
   ```yaml
   - hosts: cdmi-servers
     roles:
     - <path-to-repo>
   ```
+
   ```sh
    $ ansible-playbook -i tests/inventory <path-to-playbook>
   ```
