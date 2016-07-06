@@ -2,27 +2,24 @@
 - include: java8.yml
   when: ansible_distribution == "Ubuntu"
 
-- name: Install git
-  package: name=git state=present
-
-- name: Create tmp dir
-  file: path={{ tmp_dir }} state=directory
-  # If the tmp dir existed before, we won't delete it in the end
-  notify:
-    - remove tmp dir
-
-
-- name: Clone CDMI repo
-  git:
-    repo: "https://github.com/indigo-dc/CDMI.git"
-    dest: "{{ tmp_dir }}/git-repo"
-
-- name: Install rpm package
+- name: Install RPM package
   yum:
-    name: "{{ tmp_dir }}/git-repo/cdmi-server-{{ cdmi_version }}-1.el7.centos.x86_64.rpm"
+    name: "{{ rpm_get_url }}"
+    state: present
+  notify:
+    - restart cdmi-server
   when: ansible_pkg_mgr == "yum"
 
-- name: Install deb package
+- name: Install DEB package
   apt:
-    deb: "{{ tmp_dir }}/git-repo/cdmi-server-{{ cdmi_version }}.deb"
+    deb: "{{ deb_get_url }}"
+    state: present
+  notify:
+    - restart cdmi-server
   when: ansible_pkg_mgr == "apt"
+
+- name: Start and enable CDMI service
+  service:
+    name: cdmi-server
+    state: started
+    enabled: yes
