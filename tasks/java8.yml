@@ -13,7 +13,7 @@
     name: oracle-java8-installer
     question: shared/accepted-oracle-license-v1-1
     vtype: select
-    value: true
+    value: "true"
   when: ansible_distribution == "Ubuntu"
 
 - name: Install Java 8
