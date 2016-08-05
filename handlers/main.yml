@@ -1,0 +1,3 @@
+---
+- name: restart cdmi-server
+  service: name=cdmi-server state=restarted

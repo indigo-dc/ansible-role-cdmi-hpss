@@ -1,0 +1,26 @@
+---
+- include: java8.yml
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install RPM package
+  yum:
+    name: "{{ rpm_get_url }}"
+    state: present
+  notify:
+    - restart cdmi-server
+  when: ansible_pkg_mgr == "yum"
+
+- name: Install DEB package
+  apt:
+    deb: "{{ deb_get_url }}"
+    state: present
+    dpkg_options: "--force-overwrite"
+  notify:
+    - restart cdmi-server
+  when: ansible_pkg_mgr == "apt"
+
+- name: Start and enable CDMI service
+  service:
+    name: cdmi-server
+    state: started
+    enabled: yes
