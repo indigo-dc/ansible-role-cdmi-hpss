@@ -1,0 +1,48 @@
+---
+- name: Download CDMI for Ubuntu package
+  get_url:
+    url: "{{ deb_get_url }}"
+    dest: "~/cdmi-latest.deb"
+    force: yes
+    # apt module has no option to ignore bad certificates
+    validate_certs: no
+  when: deb_get_url is defined
+
+- name: Uninstall CDMI for Ubuntu package
+  apt:
+    name: "{{ cdmi_pkg_name }}"
+    state: absent
+
+- block:
+    - name: Install CDMI for Ubuntu package
+      apt:
+        deb: "~/cdmi-latest.deb"
+        state: present
+      notify:
+        - Restart CDMI
+      when: deb_get_url is defined
+  rescue:
+    # We need this because the above task (apt) runs `dpkg -i`,
+    # which can not resolve dependecies
+    - name: Resolve unmet dependencies
+      command: apt-get -f install
+
+
+- name: Add INDIGO-DC Ubuntu 14.04 repository
+  get_url:
+    url: "{{ indigo_ubuntu_repo_url }}"
+    dest: "/etc/apt/sources.list.d"
+  when: deb_get_url is undefined
+
+- name: Install INDIGO public PGP key over HTTP (yes you heard right)
+  apt_key:
+    url: "{{ indigo_pgp_key_url }}"
+    state: present
+  when: deb_get_url is undefined
+
+- name: Install CDMI package
+  apt:
+    name: "{{ cdmi_pkg_name }}"
+    state: latest
+    update_cache: yes
+  when: deb_get_url is undefined

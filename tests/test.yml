@@ -7,3 +7,5 @@
 
   roles:
     - role: indigo-dc.cdmi
+      deb_get_url: "https://jenkins.indigo-datacloud.eu:8080/job/cdmi-server-packaging/lastSuccessfulBuild/artifact/cdmi-server-1.2_all.deb"
+      rpm_get_url: "https://jenkins.indigo-datacloud.eu:8080/job/cdmi-server-packaging/lastSuccessfulBuild/artifact/cdmi-server-1.2-1.x86_64.rpm"

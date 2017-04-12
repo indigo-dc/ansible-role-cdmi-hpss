@@ -1,0 +1,36 @@
+---
+- name: Uninstall CDMI for CentOS package
+  yum:
+    name: "{{ cdmi_pkg_name }}"
+    state: absent
+  when: rpm_get_url is defined
+
+- name: Download/Install CDMI for CentOS package
+  yum:
+    name: "{{ rpm_get_url }}"
+    state: present
+    validate_certs: no
+  notify:
+    - Restart CDMI
+  when: rpm_get_url is defined
+
+
+- name: Add INDIGO-DC CentOS 7 repository
+  get_url:
+    url: "{{ indigo_centos_repo_url }}"
+    dest: "/etc/yum.repos.d"
+  when: rpm_get_url is undefined
+  register: yum_repo
+
+- name: Install INDIGO public PGP key over HTTP (yes you heard right)
+  get_url:
+    url: "{{ indigo_pgp_key_url }}"
+    dest: "/etc/pki/rpm-gpg"
+  when: rpm_get_url is undefined
+
+- name: Install CDMI package
+  yum:
+    name: "{{ cdmi_pkg_name }}"
+    state: latest
+    update_cache: yes
+  when: rpm_get_url is undefined
