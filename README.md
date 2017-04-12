@@ -34,7 +34,7 @@ Example Playbook
    ```yaml
    - hosts: cdmi-hosts
       roles:
-      - indigo-dc.cdmi-master
+      - indigo-dc.cdmi
    ```
 
    Then you can run it, e.g. using the provided sample playbook:
