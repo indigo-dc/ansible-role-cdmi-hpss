@@ -6,7 +6,6 @@
   apt_repository:
     repo: ppa:webupd8team/java
     state: present
-  when: ansible_distribution == "Ubuntu"
 
 - name: Accept Oracle license
   debconf:
@@ -14,12 +13,10 @@
     question: shared/accepted-oracle-license-v1-1
     vtype: select
     value: "true"
-  when: ansible_distribution == "Ubuntu"
 
 - name: Install Java 8
   apt:
     name: oracle-java8-installer
     state: present
     update_cache: yes
-  when: ansible_distribution == "Ubuntu"
 

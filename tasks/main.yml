@@ -1,6 +1,6 @@
 ---
 - include: java8.yml
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "14"
 
 - include: "{{ ansible_pkg_mgr }}.yml"
 
