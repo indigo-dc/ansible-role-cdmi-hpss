@@ -28,18 +28,6 @@
       command: apt-get -f install
 
 
-- name: Add INDIGO-DC Ubuntu 14.04 repository
-  get_url:
-    url: "{{ indigo_ubuntu_repo_url }}"
-    dest: "/etc/apt/sources.list.d"
-  when: deb_get_url is undefined
-
-- name: Install INDIGO public PGP key over HTTP (yes you heard right)
-  apt_key:
-    url: "{{ indigo_pgp_key_url }}"
-    state: present
-  when: deb_get_url is undefined
-
 - name: Install CDMI package
   apt:
     name: "{{ cdmi_pkg_name }}"

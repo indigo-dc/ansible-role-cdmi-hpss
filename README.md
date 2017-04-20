@@ -10,9 +10,6 @@ Role Variables
  - `deb_get_url`, `rpm_get_url` (optional): Define these to manually download
    the respective packages instead of using the INDIGO-DC repository
 
- - `indigo_repo`, `indigo_centos_repo_url`, `indigo_ubuntu_repo_url`,
-   `indigo_pgp_key_url`: Use these to override how to access the INDIGO repository
-
  - `cdmi_pkg_name` (default: "cdmi-server"), `cdmi_service_name` (default: "cdmi-server")
 
 Requirements
