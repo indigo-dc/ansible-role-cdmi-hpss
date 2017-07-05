@@ -34,3 +34,40 @@
     state: latest
     update_cache: yes
   when: deb_get_url is undefined
+
+
+- name: Download CDMI-HPSS for Ubuntu package
+  get_url:
+    url: "{{ deb_get_url }}"
+    dest: "~/cdmi-hpss-latest.deb"
+    force: yes
+    # apt module has no option to ignore bad certificates
+    validate_certs: no
+  when: deb_get_url is defined
+
+- name: Uninstall CDMI-HPSS for Ubuntu package
+  apt:
+    name: "{{ cdmi_hpss_pkg_name }}"
+    state: absent
+
+- block:
+    - name: Install CDMI-HPSS for Ubuntu package
+      apt:
+        deb: "~/cdmi-hpss-latest.deb"
+        state: present
+      notify:
+        - Restart CDMI HPSS
+      when: deb_get_url is defined
+  rescue:
+    # We need this because the above task (apt) runs `dpkg -i`,
+    # which can not resolve dependecies
+    - name: Resolve unmet dependencies
+      command: apt-get -f install
+
+
+- name: Install CDMI-HPSS package
+  apt:
+    name: "{{ cdmi_hpss_pkg_name }}"
+    state: latest
+    update_cache: yes
+  when: deb_get_url is undefined

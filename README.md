@@ -1,7 +1,8 @@
-Cloud Data Management Interface Role
-====================================
+Cloud Data Management Interface Role for HPSS
+=============================================
 
 Configure and start [CDMI](https://github.com/indigo-dc/CDMI).
+Configure and start [CDMI-HPSS](https://github.com/indigo-dc/cdmi-hpss)
 
 This role has been specifically developed to be used for the deployment of *CDMI* in the framework of the *INDIGO-DataCloud* project.
 
@@ -12,6 +13,8 @@ Role Variables
 
  - `cdmi_pkg_name` (default: "cdmi-server"), `cdmi_service_name` (default: "cdmi-server")
 
+ - `cdmi_hpss_pkg_name` (default: "cdmi-hpss"), `cdmi_hpss_service_name` (default: "cdmi-hpss")
+ 
 Requirements
 ------------
 - Only *CentOS 7* or *Ubuntu 14.04 LTS* on the nodes are explicily supported

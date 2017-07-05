@@ -21,3 +21,26 @@
     state: latest
     update_cache: yes
   when: rpm_get_url is undefined
+
+- name: Uninstall CDMI-HPSS for CentOS package
+  yum:
+    name: "{{ cdmi_hpss_pkg_name }}"
+    state: absent
+  when: rpm_get_url is defined
+
+- name: Download/Install CDMI-HPSS for CentOS package
+  yum:
+    name: "{{ rpm_get_url }}"
+    state: present
+    validate_certs: no
+  notify:
+    - Restart CDMI HPSS
+  when: rpm_get_url is defined
+
+
+- name: Install CDMI-HPSS package
+  yum:
+    name: "{{ cdmi_hpss_pkg_name }}"
+    state: latest
+    update_cache: yes
+  when: rpm_get_url is undefined

@@ -9,3 +9,9 @@
     name: cdmi-server
     state: started
     enabled: yes
+
+- name: Start and enable CDMI-HPSS service
+  service:
+    name: cdmi-hpss
+    state: started
+    enabled: yes

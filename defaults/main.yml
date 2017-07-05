@@ -6,3 +6,6 @@ indigo_pgp_key_url: "{{ indigo_repo }}/repository/RPM-GPG-KEY-indigodc"
 
 cdmi_pkg_name: "cdmi-server"
 cdmi_service_name: "cdmi-server"
+
+cdmi_hpss_pkg_name: "cdmi-hpss"
+cdmi_hpss_service_name: "cdmi-hpss"

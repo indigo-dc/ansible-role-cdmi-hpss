@@ -7,3 +7,12 @@
 
   roles:
     - role: indigo-dc.cdmi
+
+- name: Setup CDMI-HPSS on all CDMI servers
+  hosts: centos ubuntu
+  remote_user: ansible
+  become_user: root
+  become: yes
+
+  roles:
+    - role: indigo-dc.cdmi

@@ -1,3 +1,6 @@
 ---
 - name: Restart CDMI
   service: name=cdmi-server state=restarted
+
+- name: Restart CDMI HPSS
+  service: name=cdmi-hpss state=restarted
